@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#ocean {
+			background-image: url('sky3.jpeg') ;
+			width: 900px;
+			height: 700px;
+		}
+		.player {
+			position: absolute;
+			background-image: url('player.png');
+			width: 70px;
+			height: 75px;
+		}
+		.enemy {
+			position: absolute;
+			background-image: url('enemy.png');
+			width: 70px;
+			height: 75px;
+		}
+
+	</style>
+</head>
+
+<body id="body">
+	<img src=""></img>
+	<div id="ocean" >
+		<div id='players' ></div>
+		<div id="enemies"></div>	
+	</div>
+
+	<script type="text/javascript">
+		var player = {
+			left: 450,
+			top: 620 // player.top
+		};
+
+		var enemies = [
+			{ // enemies[0]
+				left: 350, // enemies[0].left
+				top: 200 // enemies[0].top
+			},
+			{ // enemies[1]
+				left: 450, // enemies[1].left
+				top: 250 //enemies[1].top
+			},
+			{ // enemies[2]
+				left: 550, // enemies[2].left
+				top: 300 //enemies[2].top
+			},
+			{ // enemies[3]
+				left: 650, // enemies[3].left
+				top: 350 //enemies[3].top
+			},
+			{ // enemies[4]
+				left: 250, // enemies[4].left
+				top: 150 //enemies[4].top
+			},
+			{ // enemies[5]
+				left: 150, // enemies[5].left
+				top: 100 //enemies[5].top
+			}
+		]
+
+		var skyImagesDict = {
+			0: 'sky1.jpg',
+			1: 'sky2.jpeg',
+			2: 'sky3.jpeg',
+			3: 'sky4.jpeg'
+		}
+
+		var enemyImagesDict = {
+			0: 'enemy.png',
+			1: 'enemy2.png',
+		}
+
+		var skynum = Math.random() * 4;
+		skynum = Math.floor(skynum);
+
+		var enemyNum = Math.random() * 2;
+		enemyNum = Math.floor(enemyNum);
+
+
+		document.getElementById("ocean").style.background = "url('" + skyImagesDict[skynum] + "')" ;
+		
+
+		/*
+		var imgSrc = '<div id="ocean" style= "background-image: url("'+ imagesDict[num] +'")></div>';
+		document.getElementById('body').innerHTML = imgSrc;
+		document.getElementById('ocean') = imgSrc;
+		*/
+
+		function drawPlayer() {
+			content = '';
+			content = '<div class="player" style = "top:' + player.top + 'px; left: ' 
+				+ player.left + 'px"></div>';
+			console.log(content);
+			document.getElementById("players").innerHTML = content;
+		}
+
+		drawPlayer();
+
+		function drawEnemies() {
+			content = '';
+			for (var idx = 0; idx < enemies.length; idx++) {
+				content += '<div class="enemy" style = "top:' + enemies[idx].top + 'px; left: ' 
+					+ enemies[idx].left + 'px"></div>';
+			}
+			document.getElementById("enemies").innerHTML = content;
+		}
+
+		drawEnemies();
+		console.log(document.getElementsByClassName("enemy"));
+		console.log(typeof(document.getElementsByClassName("enemy")));
+		for (var i = 0; i < document.getElementsByClassName("enemy").length; i++) {
+			document.getElementsByClassName("enemy")[i].style.backgroundImage = 
+				"url('" + enemyImagesDict[enemyNum] + "')" ;
+		}
+		
+
+		document.onkeydown = function(e) {
+			console.log(e);
+			if (e.keyCode == 37 && player.left > 0 ) { //left
+				player.left -= 10;
+			} 
+			else if (e.keyCode == 39 && player.left < 900) { // right
+				player.left += 10;
+			}
+			else if (e.keyCode == 38 && player.top > 2 * 700/3) { // up
+				player.top -= 10;
+			}
+			else if (e.keyCode == 40 && player.top < 700 ) { // down
+				player.top += 10;
+			}
+			drawPlayer();
+		}
+		
+	</script>
+</body>
+</html>
